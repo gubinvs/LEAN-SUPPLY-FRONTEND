@@ -1,0 +1,81 @@
+.add-component-application__left-block {
+    width: 70%;
+}
+
+.add-component-application__left-block {
+    margin-right: 20px;
+}
+
+.add-component-application__right-block {
+    width: 30%;
+}
+
+.add-component-application__input-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.aca-input-form__article {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.aca-input-form__name,
+.aca-input-form__select,
+.aca-input-form__new-price {
+    margin-bottom: 8px;
+}
+
+.add-component-application__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.aca-searh-form {
+    margin-bottom: 20px;
+}
+
+.aca-pagination-controls__block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+}
+
+.aca-input-form__edit-button {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.aca__analyze-offers-button {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.select__control {
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  min-height: 38px;
+}
+
+.select__menu {
+  z-index: 9999; /* чтобы не перекрывался */
+}
+
+.add-component-application__add-provider-block {
+    margin-bottom: 20px;
+}
+
+.aca-input-form__manufacturer-block {
+    display: flex;
+    margin-bottom: 20px;
+}
+.aca-input-form__manufacturer {
+    width: 100%;
+    margin-right: 10px;
+}
+
+.aca-input-form__unit {
+    width: 120px;
+}

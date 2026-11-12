@@ -1,0 +1,111 @@
+.view-suppliers-offers__block {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    width: 100%;
+}
+
+.analyze-offers-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 400px;
+}
+
+.pagination-controls__block {
+    margin-bottom: 20px;
+}
+
+.pagination-controls__button {
+    padding: 0px 10px 0px 10px;
+    height: 30px;
+    border: 1px solid #FAC855;
+    color: #FAC855;
+}
+
+.pagination-controls__button:disabled {
+    border: 1px solid #FAC855;
+    color: #FAC855;
+}
+
+.pagination-controls__button:hover {
+    background-color:  #FAC855;
+    border: 1px solid #FAC855;
+    color: black;
+}
+
+
+.table-borderless {
+    margin-bottom: 40px;
+}
+
+.table-borderless__check-coll {
+    min-width: 40px;
+    border-top-left-radius: 10px;
+}
+
+.table-borderless__name {
+    border-top-right-radius: 10px;
+}
+
+.table-borderless__article {
+    min-width: 300px;
+}
+
+.table-borderless__edit {
+    text-align: center;
+    vertical-align: middle;
+    width: 50px;
+}
+
+.table-borderless__um {
+    width: 100px;
+    text-align: center;
+}
+
+.table-borderless__manuf {
+    width: 160px;
+}
+
+.table-borderless__name {
+    width: calc(100% - 650px);
+}
+
+.view-suppliers-offers__search {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 560px;
+    height: 40px;
+}
+
+.custom-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.custom-spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #FAC855;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.ts-tbody__tr:hover td {
+    border-bottom: 0.5px solid #FAC855;
+}
+
+.table-borderless__icon-edit {
+    cursor: pointer;
+}

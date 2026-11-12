@@ -1,0 +1,137 @@
+.list-purchase-block__form-block {
+    display: flex;
+}
+
+.lp-form-block__input {
+    margin-bottom: 20px;
+}
+
+.lp-form-block__button {
+    width: 300px;
+    height: 36px;
+}
+
+.list-purchase {
+    width: 100%;
+    margin-right: 40px;
+}
+
+.lp-item__context-block {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.list-purchase__item {
+    position: relative;
+    border-radius: 4px;
+    padding: 4px 10px 14px 8px;
+    background-color: #E0E5F8;
+    margin-bottom: 2px;
+}
+
+.list-purchase__item_title {
+    display: flex;
+}
+
+.lp-item__purchase-id,
+.lp-item__check,
+.lp-item__purchase-id,
+.lp-item__purchase-name,
+.lp-item__purchase-price {
+    border-right: 1px solid #F5F6FA;
+}
+
+.lp-item__check {
+    width: 24px;
+}
+
+.lp-item__purchase-id {
+    padding-left: 10px;
+    width: 200px;
+    text-align: left;
+}
+
+.lp-item__purchase-name {
+    width: 50%;
+    padding-left: 10px;
+}
+
+.lp-item__purchase-price {
+    width: 150px;
+    text-align: center;
+}
+
+.lp-item__purchase-name-costomer {
+    padding-left: 10px;
+}
+
+.lp-item__purchase__icon-groop {
+    display: flex;
+    padding-top: 2px;
+}
+
+.lp-item__purchase__icon-groop img:not(:last-of-type) {
+    margin-right: 10px;
+}
+
+.lp-item__purchase__icon-groop img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.lp-item__purchase-id_input,
+.lp-item__purchase-name_input,
+.lp-item__purchase-name-costomer_input {
+    border: 0px;
+    margin-right: 4px;
+}
+
+.lp-item__purchase-id_input:focus,
+.lp-item__purchase-name_input:focus,
+.lp-item__purchase-name-costomer_input:focus {
+    outline: none;
+}
+
+
+.share-form-purchase {
+    position: absolute;
+    top: 10px;
+    right: 150px;
+    display: flex;
+    padding: 40px 10px 10px 10px;
+    flex-direction: column;
+    width: 300px;
+    height: 300px;
+    background-color: #E0E5F8;
+    border-radius: 4px;
+    border: 1px solid #FAC855;
+    z-index: 10;
+}
+
+.share-form-purchase__close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.share-form-purchase__title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.share-form-purchase__input {
+    margin-bottom: 20px;
+}
+
+.list-purchase__form-select {
+    border-radius: 0px;
+    width: 250px;
+    height: 28px;
+}

@@ -1,0 +1,88 @@
+.all-offers-selected__container {
+    width: 100%;
+}
+
+.all-offers-selected__button-block {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.aos-button-block__selectet-buton {
+    display: flex;
+}
+
+.text-primary {
+    font-family: "Mulish", serif !important;
+    font-size: 22px;
+    font-weight: 500;
+    color: #342F2C !important;
+}
+
+
+.custom-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.custom-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #FAC855;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.all-offers-selected__table {
+    width: 100% !important;
+}
+
+.btn-custom {
+    background-color: #FAC855;
+    border-color: #FAC855;
+    color: #000; /* черный текст, можно изменить */
+}
+
+.btn-custom-outline {
+    background-color: transparent;
+    border-color: #FAC855;
+    color: #FAC855;
+}
+
+.btn-custom-outline:hover {
+    background-color: #FAC855;
+    color: #000;
+}
+
+.all-offers-selected__button-mr10 {
+    margin-right: 10px;
+}
+
+/*Стилизация таблицы выдачи результатов*/
+.aos-table__th-article {
+    width: 150px;
+}
+
+.aos-table__th-data,
+.aos-table__th-term,
+.aos-table__th-price {
+    width: 150px;
+}
+
+.aos-table__th-company {
+    width: 200px;
+}
+
+.aos-table__th-quant {
+    width: 100px;
+    text-align: center;
+}

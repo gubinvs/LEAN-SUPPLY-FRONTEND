@@ -1,0 +1,109 @@
+
+/* Карточка компании */
+.information-company-card {
+    position: relative;
+    padding: 20px 20px 40px 20px;
+    width: 100%;
+    min-height: 200px;
+    height: auto;
+    border-radius: 6px; 
+    background-color: #E0E5F8;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.information-company-card__edit-botton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 4;
+}
+
+.information-company-card__exit-botton {
+    position: absolute;
+    top: 20px;
+    right: 124px;
+    cursor: pointer;
+    z-index: 4;
+}
+
+.information-user-card__exit-botton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 4;
+}
+
+.information-company-card__add-botton {
+    cursor: pointer;
+    z-index: 4;
+}
+
+.information-company-card__title {
+    position: inherit;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    z-index: 3;
+}
+
+.information-company-card__title_fon {
+    position: absolute;
+    top: 50px;
+    left: 31px;
+    width: 223px;
+    height: 4px;
+    background-color: #FAC855;
+    border-radius: 4px;
+    z-index: 0;
+}
+
+.information-company-card__name-company {
+    font-size: 20px;
+    font-weight: 400;
+    color: #342F2C;
+}
+
+.information-company-card__item {
+    margin-bottom: 10px;
+}
+
+.information-company-card__item_title {
+    font-weight: 800;
+}
+
+.pagination-icon-block {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 6px;
+}
+
+.pagination-icon-block__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    cursor: pointer;          
+    font-size: 12px;
+    font-weight: bold;
+    user-select: none;
+}
+
+.pagination-icon-block__add-icon {
+    padding: 0px 0px 2px 0px;
+    font-size: 14px !important;
+    font-weight: bold;
+    border: 1px solid #342F2C;
+    background-color: #E0E5F8;
+    color: #342F2C;
+}
+
+.pagination-icon-block__add-icon:hover {
+    background-color: #ffc107;
+}

@@ -1,0 +1,46 @@
+th {
+    font-size: 12px;
+}
+
+td {
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.lpc-item__article {
+    min-width: 200px;
+}
+
+.lpc-item__name {
+    width: 100%;
+}
+
+.lpc-item__quantity,
+.lpc-item__price {
+    text-align: center;
+    min-width: 80px;
+}
+
+.lpc-item__delivery {
+    text-align: center;
+    min-width: 120px;
+}
+
+.lpc-item__provider {
+    min-width: 200px;
+}
+
+.lpc-item__button-delete {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: red;
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+.change-procurement-button-block {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+}

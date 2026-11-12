@@ -1,0 +1,118 @@
+.add-item-purchase-section {
+    position: relative;
+}
+
+.add-item-purchase__form-block {
+    display: flex;
+    padding: 20px 0px 0px 0px;
+    margin-bottom: 20px;
+}
+
+.aip-block__input {
+    margin-right: 10px;
+}
+
+.aip-block__button {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.aip-block__purchase-save {
+    width: 300px;
+}
+/* 
+.add-item-purchase__result-search_close {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 12px;
+    border-top-right-radius: 14px;
+    border-top-left-radius: 14px;
+    border-top: 1px solid #FAC855;
+    border-left: 1px solid #FAC855;
+    border-right: 1px solid #FAC855;
+    right: 0px;
+    width: 80px;
+    height: 60px;
+    font-size: 22px;
+    background-color: #F5F6FA;
+    cursor: pointer;
+    color: red;
+    z-index: 1;
+} */
+
+/* .add-item-purchase__result-search_close img {
+    width: 40px;
+    height: 40px;
+}  */
+
+.add-item-purchase__result-search {
+    /* position: absolute;
+    top: 70px; */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #FAC855;
+    border-radius: 4px;
+    border-top-right-radius: 0px;
+    background-color: #F5F6FA;
+    margin-bottom: 10px;
+}
+
+.aip-result-search__list {
+    display: flex;
+    flex-direction: column;
+}
+
+.aip-result-search__item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.aip-result-search__item:hover {
+    border-bottom: .5px solid #FAC855;
+}
+
+.aip-rs-item_vendor {
+    min-width: 250px;
+    margin-right: 20px;
+}
+
+.aip-rs-item__content-block {
+    display: flex;
+}
+
+.aip-block__input-block {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.aip-block__input_closed {
+    position: absolute;
+    top: 4px;
+    right: 23px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.aip-rs-item_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    border: 1px solid #FAC855;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.aip-rs-item_button:hover {
+    border: 1px solid #FAC855;
+    background-color: #FAC855;
+}
+
+.aip-rs-item_button_add {
+    border: 1px solid #FAC855;
+    background-color: #FAC855;
+}
