@@ -46,7 +46,13 @@ const SuppliersOffers = (
                         isNavMaxVisible={isNavMaxVisible}
                     />
 
-                    {isNavMaxVisible && <NavigationBarMax />}
+                    {isNavMaxVisible && <NavigationBarMax 
+                        onShowMax={handleShowMax}
+                        onHideMax={handleHideMax}
+                        isNavMaxVisible={isNavMaxVisible}
+                    />}
+
+
                     <HeaderApplicationPanel role={role} title={title} />
                     {/* Кнопка изменения состояния ввода данных */}
                     <button

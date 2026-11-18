@@ -258,7 +258,11 @@ const AddComponentApplication = (
                 isNavMaxVisible={isNavMaxVisible}
             />
 
-            {isNavMaxVisible && <NavigationBarMax />}
+            {isNavMaxVisible && <NavigationBarMax 
+                onShowMax={handleShowMax}
+                onHideMax={handleHideMax}
+                isNavMaxVisible={isNavMaxVisible}
+            />}
 
             <HeaderApplicationPanel role={role} title={title} />
             

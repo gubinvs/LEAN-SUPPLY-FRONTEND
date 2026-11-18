@@ -126,7 +126,12 @@ const EditSupplyComponent = (
                 onHideMax={handleHideMax} 
                 isNavMaxVisible={isNavMaxVisible} 
             />
-            {isNavMaxVisible && <NavigationBarMax />}
+            {isNavMaxVisible && <NavigationBarMax 
+                onShowMax={handleShowMax}
+                onHideMax={handleHideMax}
+                isNavMaxVisible={isNavMaxVisible}
+            />}
+            
             <HeaderApplicationPanel role={role} title={title} />
 
             <div className="main-application-panel__container">
