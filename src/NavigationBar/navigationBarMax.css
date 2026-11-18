@@ -106,8 +106,15 @@
 }
 
 .navigation-bar-max__bootom-block {
-    
     display: flex;
     width: 100%;
+    align-items: center;
     justify-content: space-between;
+}
+
+.bottom-block__navigation-arrow_open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0px;
 }

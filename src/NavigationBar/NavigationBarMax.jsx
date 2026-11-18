@@ -80,7 +80,7 @@ const NavigationBarMax = (
                 <div className="fice-lodo-block">
                     <img src="../images/user_logo_max-baner.png" alt="Логотип пользователя" />
                 </div>
-                <div className="bottom-block__navigation-arrow">
+                <div className="bottom-block__navigation-arrow bottom-block__navigation-arrow_open">
                     {!isNavMaxVisible && (
                         <img
                             src="../images/icon/burger-icon-open.svg"

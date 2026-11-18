@@ -344,8 +344,16 @@ const AllOffersForSelected = (
   return (
     <>
       <div className="main-application-panel">
-        <NavigationBarMin onShowMax={handleShowMax} onHideMax={handleHideMax} isNavMaxVisible={isNavMaxVisible} />
-        {isNavMaxVisible && <NavigationBarMax />}
+        <NavigationBarMin 
+            onShowMax={handleShowMax} 
+            onHideMax={handleHideMax} 
+            isNavMaxVisible={isNavMaxVisible} 
+        />
+        {isNavMaxVisible && <NavigationBarMax 
+            onShowMax={handleShowMax} 
+            onHideMax={handleHideMax} 
+            isNavMaxVisible={isNavMaxVisible}
+        />}
         <HeaderApplicationPanel role={role} title={title} />
       </div>
 
