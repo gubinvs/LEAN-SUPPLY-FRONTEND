@@ -87,7 +87,7 @@ return (
 
       <Route path="/ApplicationPanelAdmin" element={
         <PrivateRoute allowedRoles={[ROLE_ADMIN]}>
-          <ApplicationPanelAdmin role={role} title="Панель администратора" />
+          <ApplicationPanelAdmin role={role} title="Информационная панель" />
         </PrivateRoute>
       } />
 
@@ -120,7 +120,7 @@ return (
         <PrivateRoute allowedRoles={[ROLE_CUSTOMER, ROLE_ADMIN, ROLE_USER]}>
           <SuppliersOffers 
             role={role} 
-            title="Предложения поставщиков" 
+            title="Номенклатура" 
             components={components}
             loading={loading}
             error={error}
@@ -152,7 +152,7 @@ return (
         <PrivateRoute allowedRoles={[ROLE_CUSTOMER, ROLE_ADMIN, ROLE_USER]}>
           <PurchasePage
             role={role} 
-            title="Спецификации пользователя"
+            title="Спецификации текущего пользователя"
             components={components}
             profitability={profitability}
             error={error}
