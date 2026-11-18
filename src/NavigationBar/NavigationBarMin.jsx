@@ -1,5 +1,6 @@
 import React from "react";
 import { useRoleId } from "../js/Utilits/roleId.js";
+import { useLocation } from 'react-router-dom';
 import "./navigationBarMin.css";
 import {
     linkPageAddComponent,
@@ -16,7 +17,24 @@ const NavigationBarMin = (
 ) => {
 
     // состояни роли пользователя в системе
-    const { roleCustomer, roleProvider, roleAdmin } = useRoleId();
+    const location = useLocation();
+    const { roleCustomer, roleProvider, roleAdmin, roleUser } = useRoleId();
+
+    // Пути
+    let pathApplicationPanel = "";
+    const pathSuppliersOffers = "/SuppliersOffers";
+    const pathAddComponent = "/AddComponentApplication";
+    const pathEditSupplyComponent = "/EditSupplyComponent";
+    const pathPurchase = "/Purchase";
+    const pathOrders = "/OrdersPage";
+
+    if (roleAdmin) {
+        pathApplicationPanel = "/ApplicationPanelAdmin";
+    } else if (roleUser || roleCustomer) {
+        pathApplicationPanel = "/ApplicationPanelCustomer";
+    } else if (roleProvider) {
+        pathApplicationPanel = "/ApplicationPanelProvider";
+    }
     
 
     return (
@@ -31,19 +49,43 @@ const NavigationBarMin = (
                     {roleCustomer || roleAdmin ?
                         <>
                             <li className="navigation-icon-block__item" onClick={linkPageApplicationPanel}>
-                                <img className="navigation-icon__icon-img" src="../images/icon/inform-panel-icon__big_off.svg" alt="Иконка на страницу со списком номенклатуры" />
+                                <img 
+                                    className="navigation-icon__icon-img" 
+                                    // src="../images/icon/inform-panel-icon__big_off.svg" 
+                                    src={location.pathname === pathApplicationPanel ? "../images/icon/inform-panel-icon__big_on.svg" : "../images/icon/inform-panel-icon__big_off.svg"}
+                                    alt="#" 
+                                />
                             </li>
                             <li className="navigation-icon-block__item" onClick={suppliersOffers}>
-                                <img className="navigation-icon__icon-img" src="../images/icon/nomenclature-icon__big_off.svg" alt="Иконка на страницу с редактированием номенклатуры" />
+                                <img 
+                                    className="navigation-icon__icon-img" 
+                                    // src="../images/icon/nomenclature-icon__big_off.svg"
+                                    src={location.pathname === pathSuppliersOffers ? "../images/icon/nomenclature__icon__big_on.svg" : "../images/icon/nomenclature-icon__big_off.svg"}
+                                    alt="#" 
+                                />
                             </li>
                             <li className="navigation-icon-block__item" onClick={linkPageEditSupplyComponent}>
-                                <img className="navigation-icon__icon-img" src="../images/icon/edit-nomenclature-icon__big_off.svg" alt="Иконка на страницу с редактированием номенклатуры" />
+                                <img 
+                                    className="navigation-icon__icon-img" 
+                                    // src="../images/icon/edit-nomenclature-icon__big_off.svg" 
+                                    src={location.pathname === pathEditSupplyComponent ? "../images/icon/edit-nomenclature-icon__big_on.svg" : "../images/icon/edit-nomenclature-icon__big_off.svg"}
+                                    alt="#" 
+                                />
                             </li>
                             <li className="navigation-icon-block__item" onClick={linkPageAddComponent}>
-                                <img className="navigation-icon__icon-img" src="../images/icon/add-nomenclature-icon__big_off.svg" alt="Иконка на страницу добавления артикулов" />
+                                <img 
+                                    className="navigation-icon__icon-img" 
+                                    // src="../images/icon/add-nomenclature-icon__big_off.svg" 
+                                    src={location.pathname === pathAddComponent ? "../images/icon/add-nomenclature-icon__big_on.svg" : "../images/icon/add-nomenclature-icon__big_off.svg"}
+                                    alt="#" 
+                                />
                             </li>
                             <li className="navigation-icon-block__item" onClick={linkPagePurchase}>
-                                <img className="navigation-icon__icon-img" src="../images/icon/specifications-icon__big_off.svg" alt="Иконка на страницу с данными о спецификациях" />
+                                <img 
+                                    className="navigation-icon__icon-img" 
+                                    // src="../images/icon/specifications-icon__big_off.svg" 
+                                    src={location.pathname === pathPurchase ? "../images/icon/specifications-icon__big_on.svg" : "../images/icon/specifications-icon__big_off.svg"}
+                                    alt="#" />
                             </li>
                         </>
                     :""}
