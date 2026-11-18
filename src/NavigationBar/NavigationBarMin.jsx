@@ -16,71 +16,35 @@ const NavigationBarMin = (
 ) => {
 
     // состояни роли пользователя в системе
-    const { roleCustomer, roleProvider, roleAdmin, roleUser} = useRoleId();
+    const { roleCustomer, roleProvider, roleAdmin } = useRoleId();
     
 
     return (
         <div className="navigation-bar-min">
             <div className="navigation-bar-min__top-block">
                 <picture>
-                    <img src="../../images/logo/header_logo_1280.svg" alt="Логотип системы" className="navigation-bar-min__logo" />
-                    {/* <img src="../../images/logo/logo-ha.png" alt="Логотип системы" className="navigation-bar-min__logo" /> */}
-                    {/* <img src="../../images/logo/header-logo_sa.svg" alt="Логотип системы" className="navigation-bar-min__logo" /> */}
-                </picture><br/>
+                    <img src="../../images/icon/logo-icon-ec.svg" alt="Логотип системы" className="navigation-bar-min__logo" />
+                </picture>
                 <div className="top-block__line"></div>
                 <ul className="navigation-icon-block">
-                    <li className="navigation-icon-block__item" onClick={linkPageApplicationPanel}>
-                        <img className="navigation-icon__icon-img" src="../images/dachbord_icon.svg" alt="Иконка на главную панель" />
-                    </li>
                     {/* Если роль пользователя заказчик*/}
-                    {roleCustomer ?
+                    {roleCustomer || roleAdmin ?
                         <>
+                            <li className="navigation-icon-block__item" onClick={linkPageApplicationPanel}>
+                                <img className="navigation-icon__icon-img" src="../images/icon/inform-panel-icon__big_off.svg" alt="Иконка на страницу со списком номенклатуры" />
+                            </li>
                             <li className="navigation-icon-block__item" onClick={suppliersOffers}>
-                                <img className="navigation-icon__icon-img" src="../images/specifications-icon.svg" alt="Иконка на страницу со списком номенклатуры" />
+                                <img className="navigation-icon__icon-img" src="../images/icon/nomenclature-icon__big_off.svg" alt="Иконка на страницу с редактированием номенклатуры" />
                             </li>
                             <li className="navigation-icon-block__item" onClick={linkPageEditSupplyComponent}>
-                                <img className="navigation-icon__icon-img" src="../images/file-pen-line.svg" alt="Иконка на страницу с редактированием номенклатуры" />
+                                <img className="navigation-icon__icon-img" src="../images/icon/edit-nomenclature-icon__big_off.svg" alt="Иконка на страницу с редактированием номенклатуры" />
                             </li>
                             <li className="navigation-icon-block__item" onClick={linkPageAddComponent}>
-                                <img className="navigation-icon__icon-img" src="../images/add-component-icon.svg" alt="Иконка на страницу добавления артикулов" />
-                            </li>
-                        </>
-                        :
-                        ""
-                    }
-                    {/* Если роль пользователя даром*/}
-                    {roleUser?
-                        <>
-                            <li className="navigation-icon-block__item" onClick={suppliersOffers}>
-                                <img className="navigation-icon__icon-img" src="../images/specifications-icon.svg" alt="Иконка на страницу со списком номенклатуры" />
-                            </li>
-                            {/*<li className="navigation-icon-block__item" onClick={linkPagePurchase}>
-                                <img className="navigation-icon__icon-img" src="../images/specification-icon.svg" alt="Иконка на страницу с спецификациями" />
-                            </li>
-                            <li className="navigation-icon-block__item" onClick={linkPageOrders}>
-                                <img className="navigation-icon__icon-img" src="../images/purchase-icon.svg" alt="Иконка на страницу с заказами" />
-                            </li>*/}
-                           
-                        </>:""
-                    }
-                    {/* Если роль не пользователь (просто наблюдатель) откроем добавление артикулов */}
-                    {roleAdmin ?
-                        <>
-                            <li className="navigation-icon-block__item" onClick={suppliersOffers}>
-                                <img className="navigation-icon__icon-img" src="../images/specifications-icon.svg" alt="Иконка на страницу со списком номенклатуры" />
-                            </li>
-                             <li className="navigation-icon-block__item" onClick={linkPageEditSupplyComponent}>
-                                <img className="navigation-icon__icon-img" src="../images/file-pen-line.svg" alt="Иконка на страницу с редактированием номенклатуры" />
-                            </li>
-                            <li className="navigation-icon-block__item" onClick={linkPageAddComponent}>
-                                <img className="navigation-icon__icon-img" src="../images/add-component-icon.svg" alt="Иконка на страницу добавления артикулов" />
+                                <img className="navigation-icon__icon-img" src="../images/icon/add-nomenclature-icon__big_off.svg" alt="Иконка на страницу добавления артикулов" />
                             </li>
                             <li className="navigation-icon-block__item" onClick={linkPagePurchase}>
-                                <img className="navigation-icon__icon-img" src="../images/specification-icon.svg" alt="Иконка на страницу с данными о спецификациях" />
+                                <img className="navigation-icon__icon-img" src="../images/icon/specifications-icon__big_off.svg" alt="Иконка на страницу с данными о спецификациях" />
                             </li>
-                            {/*<li className="navigation-icon-block__item" onClick={linkPageOrders}>
-                                <img className="navigation-icon__icon-img" src="../images/purchase-icon.svg" alt="Иконка на страницу с заказами" />
-                            </li>*/}
                         </>
                     :""}
                     
@@ -92,7 +56,7 @@ const NavigationBarMin = (
                 <div className="bottom-block__navigation-arrow">
                     {!isNavMaxVisible && (
                         <img
-                            src="../images/navigation-arrow-right.svg"
+                            src="../images/icon/burger-icon-off.svg"
                             alt="Показать панель"
                             className="navigation-arrow-img"
                             id="arrow-right"
@@ -102,7 +66,7 @@ const NavigationBarMin = (
                     )}
                     {isNavMaxVisible && (
                         <img
-                            src="../images/navigation-arrow-left.svg"
+                            src="../images/icon/burger-icon-on.svg"
                             alt="Скрыть панель"
                             className="navigation-arrow-img"
                             id="arrow-left"
