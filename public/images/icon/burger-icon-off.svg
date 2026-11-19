@@ -2,9 +2,9 @@
 <g filter="url(#filter0_d_224_11)">
 <rect x="4.5" y="0.5" width="21" height="21" rx="4" fill="#F5F6FA" stroke="#FBFCFD"/>
 </g>
-<line x1="10.5" y1="8.5" x2="20.5" y2="8.5" stroke-width="2" stroke="black"/>
-<line x1="10.5" y1="11.5" x2="20.5" y2="11.5" stroke-width="2" stroke="black"/>
-<line x1="10.5" y1="14.5" x2="20.5" y2="14.5" stroke-width="2" stroke="black"/>
+<line x1="10.5" y1="9" x2="20.5" y2="9" stroke="black"/>
+<line x1="10.5" y1="12" x2="20.5" y2="12" stroke="black"/>
+<line x1="10.5" y1="15" x2="20.5" y2="15" stroke="black"/>
 <defs>
 <filter id="filter0_d_224_11" x="0" y="0" width="30" height="30" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
