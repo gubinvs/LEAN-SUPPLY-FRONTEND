@@ -30,8 +30,7 @@ const NavigationBarMax = (
         <div className="navigation-bar-max">
             <div className="navigation-bar-max__top-block">
                 <div className="navigation-bar-max__logo-block">
-                    <img src="../../images/icon/logo-icon-ec.svg" alt="Логотип системы" className="navigation-bar-max__logo" />
-                    <div className="nbm-logo-block__title">Компоненты <br/> энергии</div>
+                    <img src="../../images/logo/header_logo_1280.svg" alt="Логотип системы" className="navigation-bar-min__logo" />
                 </div>
                 <div className="top-block__line navigation-bar-max__top-block__line"></div>
                 <ul className="navigation-bar-max__navigation-list">
@@ -42,7 +41,7 @@ const NavigationBarMax = (
                                 onClick={() => navigate(pathApplicationPanel)}
                             >
                                 <img src="../../images/icon/inform-panel-icon_off.svg" className="nbm-navigation-item__icon" alt="#"/>
-                                <div className="nbm-navigation-item__name">Информ-панель</div>
+                                <div className="nbm-navigation-item__name">Дашборд</div>
                             </li>
                             <li
                                 className={`navigation-bar-max__navigation-item ${location.pathname === pathSuppliersOffers ? 'navigation-bar-max__navigation-item_active' : ''}`}

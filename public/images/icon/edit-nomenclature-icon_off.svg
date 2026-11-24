@@ -1,23 +1,8 @@
-<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_211_92)">
-<rect x="4.5" y="0.5" width="21" height="21" rx="4" fill="#F5F6FA" stroke="#FBFCFD"/>
-</g>
-<rect x="9" y="4" width="12" height="14" rx="1.5" fill="#F5F6FA" stroke="#342F2C"/>
-<line x1="21" y1="8.5" x2="17" y2="8.5" stroke="#342F2C"/>
-<line x1="17.5" y1="4" x2="17.5" y2="8" stroke="#342F2C"/>
-<path d="M18.2235 12.0149C18.4005 11.7936 18.5 11.4934 18.5 11.1803C18.5 10.8673 18.4005 10.5671 18.2235 10.3457C18.0464 10.1244 17.8063 10 17.5558 10C17.3054 10 17.0653 10.1244 16.8882 10.3457L15.1058 12.5751C15.0002 12.7071 14.9228 12.8703 14.8809 13.0496L14.5089 14.6444C14.4977 14.6922 14.4971 14.7429 14.507 14.7911C14.5168 14.8394 14.5369 14.8834 14.5651 14.9186C14.5933 14.9538 14.6285 14.9789 14.6671 14.9913C14.7057 15.0037 14.7462 15.0028 14.7845 14.9889L16.0601 14.5238C16.2036 14.4714 16.3341 14.3747 16.4397 14.2426L18.2235 12.0149Z" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
-<path d="M10.5 13.5H12.3916" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
-<path d="M10.5 15.5H12.3916" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
-<defs>
-<filter id="filter0_d_211_92" x="0" y="0" width="30" height="30" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_211_92"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_211_92" result="shape"/>
-</filter>
-</defs>
+<svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="16" height="18.6154" rx="1.5" fill="#F5F6FA" stroke="#342F2C"/>
+<line x1="16.3462" y1="6.38461" x2="11.1154" y2="6.38461" stroke="#342F2C"/>
+<line x1="11.6154" y1="0.653839" x2="11.6154" y2="5.88461" stroke="#342F2C"/>
+<path d="M12.7153 11.1349C12.9468 10.8455 13.0769 10.4529 13.0769 10.0435C13.0769 9.63414 12.9468 9.24154 12.7153 8.95208C12.4838 8.66262 12.1697 8.5 11.8423 8.5C11.5148 8.5 11.2008 8.66262 10.9692 8.95208L8.6384 11.8674C8.50021 12.04 8.39905 12.2535 8.34429 12.4879L7.85778 14.5734C7.84319 14.6359 7.84232 14.7022 7.85525 14.7653C7.86818 14.8284 7.89444 14.886 7.93128 14.932C7.96812 14.9781 8.01418 15.0109 8.06465 15.0271C8.11512 15.0433 8.16814 15.0422 8.21815 15.0239L9.88635 14.4157C10.0739 14.3473 10.2446 14.2208 10.3827 14.048L12.7153 11.1349Z" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
+<path d="M2.61539 13.0769H5.08902" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
+<path d="M2.61539 15.6923H5.08902" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
 </svg>

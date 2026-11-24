@@ -41,7 +41,7 @@ const NavigationBarMin = (
         <div className="navigation-bar-min">
             <div className="navigation-bar-min__top-block">
                 <picture>
-                    <img src="../../images/icon/logo-icon-ec.svg" alt="Логотип системы" className="navigation-bar-min__logo" />
+                    <img src="../../images/logo/header_logo_1280.svg" alt="Логотип системы" className="navigation-bar-min__logo" />
                 </picture>
                 <div className="top-block__line"></div>
                 <ul className="navigation-icon-block">
@@ -52,7 +52,7 @@ const NavigationBarMin = (
                                 <img 
                                     className="navigation-icon__icon-img" 
                                     // src="../images/icon/inform-panel-icon__big_off.svg" 
-                                    src={location.pathname === pathApplicationPanel ? "../images/icon/inform-panel-icon__big_on.svg" : "../images/icon/inform-panel-icon__big_off.svg"}
+                                    src={location.pathname === pathApplicationPanel ? "../images/icon/dachbord__icon-big_on.svg" : "../images/icon/dachbord__icon-big_off.svg"}
                                     alt="#" 
                                 />
                             </li>

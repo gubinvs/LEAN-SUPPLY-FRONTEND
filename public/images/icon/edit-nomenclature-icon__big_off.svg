@@ -1,28 +1,12 @@
-<svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g filter="url(#filter0_d_215_53)">
-<rect x="4.5" y="0.5" width="40" height="40" rx="6" fill="#F5F6FA" stroke="#FBFCFD"/>
-</g>
-<use xlink:href="#stroke0_215_53" fill="#F5F6FA"/>
-<mask id="stroke1_215_53" fill="white">
-<use xlink:href="#stroke0_215_53"/>
+<svg width="26" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 4C0 1.79086 1.79086 0 4 0H16C21.5228 0 26 4.47715 26 10V26C26 28.2091 24.2091 30 22 30H4C1.79086 30 0 28.2091 0 26V4Z" fill="#F5F6FA"/>
+<mask id="stroke0_215_39" fill="white">
+<path d="M0 4C0 1.79086 1.79086 0 4 0H16C21.5228 0 26 4.47715 26 10V26C26 28.2091 24.2091 30 22 30H4C1.79086 30 0 28.2091 0 26V4Z"/>
 </mask>
-<path d="M15.5 35.5H33.5C35.7091 35.5 37.5 33.7091 37.5 31.5V15.5C37.5 9.97715 33.0228 5.5 27.5 5.5H15.5C13.2909 5.5 11.5 7.29086 11.5 9.5V31.5C11.5 33.7091 13.2909 35.5 15.5 35.5Z" stroke-width="4" stroke="#342F2C" mask="url(#stroke1_215_53)"/>
-<line x1="36.5" y1="15.5" x2="28.5" y2="15.5" stroke-width="2" stroke="#342F2C"/>
-<line x1="29.5" y1="6.5" x2="29.5" y2="14.5" stroke-width="2" stroke="#342F2C"/>
-<path d="M30.9469 22.5299C31.3011 22.0872 31.5 21.4867 31.5 20.8607C31.5 20.2346 31.3011 19.6341 30.9469 19.1914C30.5928 18.7487 30.1125 18.5 29.6117 18.5C29.1109 18.5 28.6306 18.7487 28.2765 19.1914L24.7117 23.6501C24.5003 23.9142 24.3456 24.2406 24.2618 24.5992L23.5178 27.7887C23.4955 27.8844 23.4941 27.9857 23.5139 28.0822C23.5337 28.1787 23.5738 28.2668 23.6302 28.3372C23.6865 28.4077 23.757 28.4579 23.8342 28.4826C23.9114 28.5073 23.9924 28.5057 24.0689 28.4778L26.6203 27.5476C26.9071 27.4429 27.1682 27.2495 27.3795 26.9852L30.9469 22.5299Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
-<path d="M15.5 25.5H19.2832" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
-<path d="M15.5 29.5H19.2832" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
-<defs>
-<filter id="filter0_d_215_53" x="0" y="0" width="49" height="49" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_215_53"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_215_53" result="shape"/>
-</filter>
-<path id="stroke0_215_53" d="M11.5 9.5C11.5 7.29086 13.2909 5.5 15.5 5.5H27.5C33.0228 5.5 37.5 9.97715 37.5 15.5V31.5C37.5 33.7091 35.7091 35.5 33.5 35.5H15.5C13.2909 35.5 11.5 33.7091 11.5 31.5V9.5Z"/>
-</defs>
+<path d="M4 30H22C24.2091 30 26 28.2091 26 26V10C26 4.47715 21.5228 0 16 0H4C1.79086 0 0 1.79086 0 4V26C0 28.2091 1.79086 30 4 30Z" stroke-width="2" stroke="#342F2C" mask="url(#stroke0_215_39)"/>
+<line x1="25" y1="9.5" x2="17" y2="9.5" stroke="#342F2C"/>
+<line x1="17.5" y1="1" x2="17.5" y2="9" stroke="#342F2C"/>
+<path d="M19.4469 17.0299C19.8011 16.5872 20 15.9867 20 15.3607C20 14.7346 19.8011 14.1341 19.4469 13.6914C19.0928 13.2487 18.6125 13 18.1117 13C17.6109 13 17.1306 13.2487 16.7765 13.6914L13.2117 18.1501C13.0003 18.4142 12.8456 18.7406 12.7618 19.0992L12.0178 22.2887C11.9955 22.3844 11.9941 22.4857 12.0139 22.5822C12.0337 22.6787 12.0738 22.7668 12.1302 22.8372C12.1865 22.9077 12.257 22.9579 12.3342 22.9826C12.4114 23.0073 12.4924 23.0057 12.5689 22.9778L15.1203 22.0476C15.4071 21.9429 15.6682 21.7495 15.8795 21.4852L19.4469 17.0299Z" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
+<path d="M4 20H7.78321" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
+<path d="M4 24H7.78321" stroke-linecap="round" stroke-linejoin="round" stroke="#342F2C"/>
 </svg>

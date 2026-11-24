@@ -4,7 +4,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding-top: 10px;
     padding-bottom: 10px;
     width: 70px;
     min-width: 70px;
@@ -36,7 +35,7 @@
 }
 
 .navigation-icon-block__item {
-    margin-bottom: 8px;
+    margin-bottom: 18px;
     cursor: pointer;
 }
 
