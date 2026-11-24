@@ -29,9 +29,8 @@ const ApplicationPanelAdmin = (
                 onHideMax={handleHideMax}
                 isNavMaxVisible={isNavMaxVisible} />}
 
-            <HeaderApplicationPanel role={role} title={title} 
-            />
             
+            <HeaderApplicationPanel role={role} title={title} />
             {/* Панель с данными о компании пользователя и данными пользователя */}
             <InformationPanel role={role}  /> 
         </div>
