@@ -86,3 +86,7 @@
     width: 100px;
     text-align: center;
 }
+
+.all-offers-selected__button-select-block button:not(:last-of-type) {
+    margin-right: 10px;
+}

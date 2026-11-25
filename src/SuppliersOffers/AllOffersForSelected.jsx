@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import ApiUrl from "../js/ApiUrl.js";
 import { useRoleId } from "../js/Utilits/roleId.js";
 import "./allOffersForSelected.css";
@@ -8,32 +8,34 @@ import HeaderApplicationPanel from "../ApplicationPanel/Header/HeaderApplication
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import PaginationPage from "../ElementApplication/PaginationPage.jsx";
-import { within } from "@testing-library/react";
 
-
-
-const AllOffersForSelected = (
-  { role, title }
-) => {
+const AllOffersForSelected = ({ role, title }) => {
   const { roleCustomer, roleProvider, roleAdmin, roleUser } = useRoleId();
+  
   const [isNavMaxVisible, setIsNavMaxVisible] = useState(false);
   const [analyzedComponents, setAnalyzedComponents] = useState([]);
+  
+  // Данные для режима "Все предложения"
   const [combinedOffers, setCombinedOffers] = useState([]);
-  const [bestOffersByProvider, setBestOffersByProvider] = useState({});
   const [loading, setLoading] = useState(false);
-  const [showBestByProvider, setShowBestByProvider] = useState(false);
+  
+  // Данные для режимов "Лучшие" (приходят готовыми с API)
+  const [bestPriceData, setBestPriceData] = useState([]);
+  const [bestTimeData, setBestTimeData] = useState([]);
+  const [loadingBest, setLoadingBest] = useState(false);
+
   const [selectedVendorCodes, setSelectedVendorCodes] = useState(new Set());
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 1000000;
-  
-  
-  const [totalPages, setTotalPage]= useState(1)
- 
+  const [totalPages, setTotalPage] = useState(1);
 
+  // 'all' | 'price' | 'time'
+  const [viewMode, setViewMode] = useState('all');
 
   const handleShowMax = () => setIsNavMaxVisible(true);
   const handleHideMax = () => setIsNavMaxVisible(false);
 
+  // 1. Загрузка всех предложений (для режима 'all')
   useEffect(() => {
     const analyzeData = JSON.parse(localStorage.getItem("analyzeData") || "{}");
     const selected = analyzeData.selectedComponents || [];
@@ -50,7 +52,6 @@ const AllOffersForSelected = (
         return;
       }
 
-      // Запросили данные о ценах поставщика = списком артикулов
       try {
         const response = await fetch(`${ApiUrl}/api/ReturnPriceProviderListArticle`, {
           method: "POST",
@@ -58,111 +59,124 @@ const AllOffersForSelected = (
           body: JSON.stringify({ Articles: articleList })
         });
 
-        if (!response.ok) throw new Error("Ошибка загрузки данных");
+        if (!response.ok) throw new Error("Ошибка загрузки данных цен");
         const data = await response.json();
 
-
-        // Собрали данные с сервера о предложениях поставщиков
         const allOffersApi = [];
-            data.found.forEach((component) => {
-              component.offers.forEach((offer) => {
-                allOffersApi.push({
-                  ...offer,
-                  vendorCode: component.article,
-                  nameComponent: component.nameComponent,
-                });
-              });
+        data.found.forEach((component) => {
+          component.offers.forEach((offer) => {
+            allOffersApi.push({
+              ...offer,
+              vendorCode: component.article,
+              nameComponent: component.nameComponent,
+            });
+          });
         });
 
+        const selectedMap = new Map(selected.map(item => [item.vendorCodeComponent, item.quantity]));
+        const allOffers = allOffersApi.map(item => ({
+          ...item,
+          quantity: selectedMap.get(item.vendorCode) ?? item.quantity,
+        }));
 
-        // Добавляем количество из константы: "selected "
-        const allOffers = [];
-        allOffersApi.forEach((item) => {
-          selected.forEach((itemSelected)=> {
-            if (item.vendorCode === itemSelected.vendorCodeComponent) {
-              allOffers.push(
-                {
-                  ...item,
-                  quantity: itemSelected.quantity,
-                });}
-          })
-        });
-
-
-        // Запрашиваем данные о стоимости последней закупки оформленной в 1С
         const responseEntryPurchase = await fetch(`${ApiUrl}/api/ReturnListEntryPurchasePrice`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ Articles: articleList })
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ Articles: articleList })
         });
 
-        if (!responseEntryPurchase.ok) throw new Error("Ошибка загрузки данных");
-        const dataEntryPurchase = await responseEntryPurchase.json();
-
-        
-        
-        // Добавляем данные о стоимости последней закупки = списком артикулов,
-        // получаем данные о последних покупках по каждому артикулу и добавляем эти данные в массив allOffers
-        const allOffersAllPurchase = [];
-        allOffers.forEach((item, index) => {
-          
-          const matches = dataEntryPurchase.filter(x => x.article === item.vendorCode);
-
-          const nextItem = allOffers[index + 1];
-
-          if (nextItem && item.vendorCode === nextItem.vendorCode) {
-            allOffersAllPurchase.push({
-                  ...item
-                });
-          }  else  {
-                allOffersAllPurchase.push({
-                  ...item,
-                  entryPurchase: matches
-                });
-          }
-          
-        });
-
-      
-        // Сохраняем все предложения
-        setCombinedOffers(allOffersAllPurchase);
-        
-        
-
-        // Фильтруем по артикулу и лучшей цене
-        const bestOffersByArticle = new Map();
-        allOffers.forEach((offer) => {
-          const currentBest = bestOffersByArticle.get(offer.vendorCode);
-          if (offer.priceComponent !== 0 && (!currentBest || offer.priceComponent < currentBest.priceComponent)) {
-            bestOffersByArticle.set(offer.vendorCode, offer);
-          }
-        });
-
-        // Группируем предложения по поставщику
-        const bestGroupedByProvider = {};
-        bestOffersByArticle.forEach((offer) => {
-          if (!bestGroupedByProvider[offer.nameProvider]) {
-            bestGroupedByProvider[offer.nameProvider] = [];
-          }
-          bestGroupedByProvider[offer.nameProvider].push(offer);
-        });
-
-        setBestOffersByProvider(bestGroupedByProvider);
+        if (responseEntryPurchase.ok) {
+          const dataEntryPurchase = await responseEntryPurchase.json();
+          const allOffersAllPurchase = allOffers.map(item => {
+            const matches = dataEntryPurchase.filter(x => x.article === item.vendorCode);
+            return { ...item, entryPurchase: matches };
+          });
+          setCombinedOffers(allOffersAllPurchase);
+        } else {
+          setCombinedOffers(allOffers);
+        }
 
       } catch (error) {
-          console.error("Ошибка:", error);
+        console.error("Ошибка при загрузке данных:", error);
       } finally {
-          setLoading(false);
+        setLoading(false);
       }
     };
 
     if (selected.length > 0) fetchData();
   }, []);
 
-  // 
-  // Соберем всю информацию о компаниях поставщиках и их представителях, для всплывающей карточки компании
-  // запрос на API сервер по ИНН, запрашиваем списком .если есть в системе прикрепленные колабораторы тоже подтягиваем
-  //
+  // 2а. Загрузка "Лучших по цене" (срабатывает только при viewMode === 'price')
+  useEffect(() => {
+    if (viewMode !== 'price' || analyzedComponents.length === 0) return;
+
+    const fetchBestPriceData = async () => {
+      setLoadingBest(true);
+      try {
+        const articleList = analyzedComponents
+          .map((comp) => comp.vendorCodeComponent)
+          .filter((a) => a && a.trim().length > 0);
+
+        if (articleList.length === 0) {
+          setLoadingBest(false);
+          return;
+        }
+
+        const response = await fetch(`${ApiUrl}/api/ReturnBestPriceProviderListArticle`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ Articles: articleList })
+        });
+
+        if (!response.ok) throw new Error("Ошибка загрузки лучших цен");
+        const data = await response.json();
+        setBestPriceData(data);
+
+      } catch (error) {
+        console.error("Ошибка при загрузке лучших цен:", error);
+      } finally {
+        setLoadingBest(false);
+      }
+    };
+
+    fetchBestPriceData();
+  }, [viewMode, analyzedComponents]);
+
+  // 2б. Загрузка "Лучших по сроку" (срабатывает только при viewMode === 'time')
+  useEffect(() => {
+    if (viewMode !== 'time' || analyzedComponents.length === 0) return;
+
+    const fetchBestTimeData = async () => {
+      setLoadingBest(true);
+      try {
+        const articleList = analyzedComponents
+          .map((comp) => comp.vendorCodeComponent)
+          .filter((a) => a && a.trim().length > 0);
+
+        if (articleList.length === 0) {
+          setLoadingBest(false);
+          return;
+        }
+
+        const response = await fetch(`${ApiUrl}/api/ReturnBestTimeProviderListArticle`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ Articles: articleList })
+        });
+
+        if (!response.ok) throw new Error("Ошибка загрузки лучших сроков");
+        const data = await response.json();
+        setBestTimeData(data);
+
+      } catch (error) {
+        console.error("Ошибка при загрузке лучших сроков:", error);
+      } finally {
+        setLoadingBest(false);
+      }
+    };
+
+    fetchBestTimeData();
+  }, [viewMode, analyzedComponents]);
 
 
   const toggleVendorSelection = (vendorCode) => {
@@ -173,187 +187,209 @@ const AllOffersForSelected = (
     });
   };
 
-  const getFilteredOffers = () => {
+  const filteredOffers = useMemo(() => {
     return selectedVendorCodes.size > 0
       ? combinedOffers.filter((o) => selectedVendorCodes.has(o.vendorCode))
       : combinedOffers;
-  };
+  }, [combinedOffers, selectedVendorCodes]);
+
+  useEffect(() => {
+    setTotalPage(Math.ceil(filteredOffers.length / rowsPerPage));
+  }, [filteredOffers.length, rowsPerPage]);
+
+  // --- Функции экспорта в Excel ---
 
   const exportToExcel = () => {
-      const data = getFilteredOffers().map((offer) => ({
-        Артикул: offer.vendorCode,
-        Наименование: offer.nameComponent,
-        Компания: offer.nameProvider,
-        Цена: offer.priceComponent,
-        Срок: offer.deliveryTimeComponent,
-        Актуальность: new Date(offer.saveDataPrice).toLocaleDateString("ru-RU"),
-      }));
+    const data = filteredOffers.map((offer) => ({
+      Артикул: offer.vendorCode,
+      Наименование: offer.nameComponent,
+      Компания: offer.nameProvider,
+      Цена: offer.priceComponent,
+      Срок: offer.deliveryTimeComponent,
+      Актуальность: new Date(offer.saveDataPrice).toLocaleDateString("ru-RU"),
+    }));
 
-      const ws = XLSX.utils.json_to_sheet(data);
-
-      // Пример установки ширины колонок (ширина в "знаках")
-      ws['!cols'] = [
-        { wch: 20 }, // Артикул
-        { wch: 60 }, // Наименование — можно ограничить по желанию
-        { wch: 20 }, // Компания
-        { wch: 11 }, // Цена
-        { wch: 15 }, // Срок
-        { wch: 15 }, // Актуальность
-      ];
-
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Предложения");
-      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-      const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-      saveAs(blob, "Предложения.xlsx");
+    const ws = XLSX.utils.json_to_sheet(data);
+    ws['!cols'] = [{ wch: 20 }, { wch: 60 }, { wch: 20 }, { wch: 11 }, { wch: 15 }, { wch: 15 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Предложения");
+    saveAs(new Blob([XLSX.write(wb, { bookType: "xlsx", type: "array" })], { type: "application/octet-stream" }), "Предложения.xlsx");
   };
 
   const exportBestByProviderToExcel = () => {
-      const wb = XLSX.utils.book_new();
+    const data = bestPriceData.map((item) => ({
+      Артикул: item.article || "Не указан",
+      Наименование: item.nameComponent || "Не указано",
+      Компания: item.offer?.nameProvider || "Неизвестно",
+      Цена: item.offer?.priceComponent || 0,
+      Срок: item.offer?.deliveryTimeComponent || "Не указан",
+      Актуальность: item.offer?.saveDataPrice ? new Date(item.offer.saveDataPrice).toLocaleDateString("ru-RU") : "",
+    }));
 
-      Object.entries(bestOffersByProvider).forEach(([provider, offers]) => {
-        const sortedOffers = offers.sort((a, b) => a.priceComponent - b.priceComponent);
-        const wsData = sortedOffers.map((offer) => ({
-          Артикул: offer.vendorCode,
-          Наименование: offer.nameComponent,
-          Количество: offer.quantity,
-          Цена: offer.priceComponent,
-          Срок: offer.deliveryTimeComponent,
-          Актуальность: new Date(offer.saveDataPrice).toLocaleDateString("ru-RU"),
-        }));
+    const ws = XLSX.utils.json_to_sheet(data);
+    ws['!cols'] = [{ wch: 20 }, { wch: 60 }, { wch: 20 }, { wch: 11 }, { wch: 15 }, { wch: 15 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Лучшие по цене");
+    saveAs(new Blob([XLSX.write(wb, { bookType: "xlsx", type: "array" })], { type: "application/octet-stream" }), "ЛучшиеПоЦене.xlsx");
+  };
 
-        const ws = XLSX.utils.json_to_sheet(wsData);
+  const exportFastestDeliveryProviderToExcel = () => {
+    const data = bestTimeData.map((item) => ({
+      Артикул: item.article || "Не указан",
+      Наименование: item.nameComponent || "Не указано",
+      Компания: item.offer?.nameProvider || "Неизвестно",
+      Цена: item.offer?.priceComponent || 0,
+      Срок: item.offer?.deliveryTimeComponent || "Не указан",
+      Актуальность: item.offer?.saveDataPrice ? new Date(item.offer.saveDataPrice).toLocaleDateString("ru-RU") : "",
+    }));
 
-        // Пример установки ширины колонок, адаптируй по своему набору полей
-        ws['!cols'] = [
-          { wch: 20 }, // Артикул
-          { wch: 60 }, // Наименование
-          { wch: 15 }, // Количество
-          { wch: 11 }, // Цена
-          { wch: 15 }, // Срок
-          { wch: 15 }, // Актуальность
-        ];
+    const ws = XLSX.utils.json_to_sheet(data);
+    ws['!cols'] = [{ wch: 20 }, { wch: 60 }, { wch: 20 }, { wch: 11 }, { wch: 15 }, { wch: 15 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Лучшие по сроку");
+    saveAs(new Blob([XLSX.write(wb, { bookType: "xlsx", type: "array" })], { type: "application/octet-stream" }), "ЛучшиеПоСроку.xlsx");
+  };
 
-        XLSX.utils.book_append_sheet(wb, ws, provider.substring(0, 31));
-      });
+  // --- Рендеринг строк таблицы ---
 
-      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-      const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-      saveAs(blob, "ЛучшиеПредложенияПоПоставщикам.xlsx");
-    };
+  const renderRows = () => {
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    // Массив уже отсортирован по артикулу
+    const paginated = [...filteredOffers]
+      .sort((a, b) => a.vendorCode.localeCompare(b.vendorCode))
+      .slice(startIndex, startIndex + rowsPerPage);
 
+    let prevVendor = null;
+    let prevName = null;
 
-      const offers = getFilteredOffers(); // вызываем 1 раз
+    return paginated.map((offer, index) => {
+      const isFirstOccurrence = offer.vendorCode !== prevVendor || offer.nameComponent !== prevName;
+      if (isFirstOccurrence) {
+        prevVendor = offer.vendorCode;
+        prevName = offer.nameComponent;
+      }
 
-    useEffect(() => {
-      setTotalPage(Math.ceil(offers.length / rowsPerPage));
-    }, [offers.length, rowsPerPage]);
-
-
-    
-    // Выдает результат о найденной номенклатуре согласно запросу пользователя
-    const renderRows = () => {
-  
-      const startIndex = (currentPage - 1) * rowsPerPage;
-      const paginated = offers.slice(startIndex, startIndex + rowsPerPage);
-
-      let prevVendor = null;
-      let prevName = null;
-
-      return paginated.map((offer, index) => {
-        const isFirstOccurrence = offer.vendorCode !== prevVendor || offer.nameComponent !== prevName;
-        if (isFirstOccurrence) {
-          prevVendor = offer.vendorCode;
-          prevName = offer.nameComponent;
-        }
+      // Определяем, является ли это предложение ПОСЛЕДНИМ для данного артикула
+      const nextOffer = paginated[index + 1];
+      const isLastForVendor = !nextOffer || nextOffer.vendorCode !== offer.vendorCode;
       
-        return (
-          <>
-            {isFirstOccurrence  && (
-              <tr key={`${offer.vendorCode}-${offer.nameProvider}-${index}`}>
-                <td>   
-                    {isFirstOccurrence && (
-                      <input
-                        type="checkbox"
-                        checked={selectedVendorCodes.has(offer.vendorCode)}
-                        onChange={() => toggleVendorSelection(offer.vendorCode)}
-                      />
-                    )}</td>
-                <td>{offer.vendorCode}</td>
-                <td colSpan={5}>{offer.nameComponent}</td>
-              </tr>
-            )}
-            <tr key={`header-${offer.vendorCode}`}>
-                <td style={{width: "20px"}}>
-                    {/* {isFirstOccurrence && (
-                      <input
-                        type="checkbox"
-                        checked={selectedVendorCodes.has(offer.vendorCode)}
-                        onChange={() => toggleVendorSelection(offer.vendorCode)}
-                      />
-                    )} */}
-                </td>
-                {/* <td>{isFirstOccurrence ? offer.vendorCode : ""}</td>
-                <td>{isFirstOccurrence ? offer.nameComponent : ""}</td> */}
-                
-                <td colSpan={2} style={{ textAlign: "right" }}>предложение</td>
-                {/*{!roleUser?<td>{offer.nameProvider}</td>:<td style={{fontSize: '14px', color: "green"}}>доступно по подписке</td>}*/}
-                <td>
-                      {/*Если пользователь Администратор или заказчик, выводим ссылку на страницу с контактами менеджеров компании*/}
-                      {roleAdmin || roleCustomer?
-                      <>
-                        {/*Ссылка на страницу с данными о менедрере компании*/}
-                        <a 
-                          href={"http://192.168.1.43"} 
-                          target="_blank"
-                          
-                        >
-                            {offer.nameProvider}
-                        </a>
-                      </>
-                      :
-                      <>
-                      {/*Просто наименование компании*/}
-                        {offer.nameProvider}
-                      </>
-                      }
-                      
-                </td>
-                <td>{offer.priceComponent.toLocaleString("ru-RU")} ₽</td>
-                <td>{offer.deliveryTimeComponent}</td>
-                <td>{new Date(offer.saveDataPrice).toLocaleDateString("ru-RU")}</td>
+      return (
+        <React.Fragment key={`fragment-${offer.vendorCode}-${offer.nameProvider}-${index}`}>
+          {isFirstOccurrence && (
+            <tr key={`main-${offer.vendorCode}-${index}`}>
+              <td>   
+                <input
+                  type="checkbox"
+                  checked={selectedVendorCodes.has(offer.vendorCode)}
+                  onChange={() => toggleVendorSelection(offer.vendorCode)}
+                />
+              </td>
+              <td>{offer.vendorCode}</td>
+              <td colSpan={5}>{offer.nameComponent}</td>
             </tr>
-            {/*// Выводим оприходование*/}
-            {offer.entryPurchase?.[0] &&  (
-                <>
-                  <tr key={`purchase-${offer.vendorCode}-${index}`}>
-                      <td style={{width: "20px"}}></td>              
-                      <td colSpan={2} style={{ textAlign: "right" }}>Последняя покупка из 1С:</td>
-                      <td>{offer.entryPurchase[0].nameProvider}</td>
-                      <td>{offer.entryPurchase[0].purchasePrice.toLocaleString("ru-RU")} ₽</td>
-                      <td>Оприходован</td>
-                      <td>{new Date(offer.entryPurchase[0].saveDataPrice).toLocaleDateString("ru-RU")}</td>
-                  </tr>
-                </>
+          )}
+          
+          <tr key={`offer-${offer.vendorCode}-${offer.nameProvider}-${index}`}>
+            <td style={{ width: "20px" }}></td>
+            <td colSpan={2} style={{ textAlign: "right" }}>предложение</td>
+            <td>
+              {roleAdmin || roleCustomer ? (
+                <a href="http://192.168.1.43" target="_blank" rel="noopener noreferrer">
+                  {offer.nameProvider}
+                </a>
+              ) : (
+                offer.nameProvider
               )}
-          </>
-        );
-      });
-    };
+            </td>
+            <td>{offer.priceComponent.toLocaleString("ru-RU")} ₽</td>
+            <td>{offer.deliveryTimeComponent}</td>
+            <td>{new Date(offer.saveDataPrice).toLocaleDateString("ru-RU")}</td>
+          </tr>
+
+          {/* Выводим оприходование ТОЛЬКО после последнего предложения артикула */}
+          {isLastForVendor && offer.entryPurchase?.[0] && (
+            <>
+              <tr key={`purchase-${offer.vendorCode}-${index}`} className="table-info_1">
+                <td style={{ width: "20px" }}></td>              
+                <td colSpan={2} style={{ textAlign: "right" }}>Последняя покупка из 1С:</td>
+                <td>{offer.entryPurchase[0].nameProvider}</td>
+                <td>{offer.entryPurchase[0].purchasePrice.toLocaleString("ru-RU")} ₽</td>
+                <td>Оприходован</td>
+                <td>{new Date(offer.entryPurchase[0].saveDataPrice).toLocaleDateString("ru-RU")}</td>
+              </tr>
+              <tr>
+                <td></td>              
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </>
+          )}
+        </React.Fragment>
+      );
+    });
+  };
+
+  // Вспомогательная функция для рендера таблиц "Лучшие"
+  const renderBestTable = (data) => {
+    if (!data || data.length === 0) return <p className="text-muted">Нет данных для отображения.</p>;
+
+    const totalPrice = data.reduce((sum, item) => sum + (item.offer?.priceComponent || 0), 0);
+
+    return (
+      <table className="table table-bordered all-offers-selected__table">
+        <thead className="thead-light">
+          <tr>
+            <th className="aos-table__th-article">Артикул</th>
+            <th>Наименование</th>
+            <th className="aos-table__th-company">Компания</th>
+            <th className="aos-table__th-price">Цена</th>
+            <th className="aos-table__th-term">Срок</th>
+            <th className="aos-table__th-data">Актуальность</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, idx) => (
+            <tr key={idx}>
+              <td>{item.article || "Не указан"}</td>
+              <td>{item.nameComponent || "Не указано"}</td>
+              <td>
+                {roleAdmin || roleCustomer ? (
+                  <a href="http://192.168.1.43" target="_blank" rel="noopener noreferrer">
+                    {item.offer?.nameProvider || "Неизвестно"}
+                  </a>
+                ) : (
+                  item.offer?.nameProvider || "Неизвестно"
+                )}
+              </td>
+              <td>{(item.offer?.priceComponent || 0).toLocaleString("ru-RU")} ₽</td>
+              <td>{item.offer?.deliveryTimeComponent || "Не указан"}</td>
+              <td>
+                {item.offer?.saveDataPrice 
+                  ? new Date(item.offer.saveDataPrice).toLocaleDateString("ru-RU") 
+                  : "-"}
+              </td>
+            </tr>
+          ))}
+          {/* <tr className="table-active">
+            <td colSpan={3}><b>Итого (по выбранным позициям)</b></td>
+            <td colSpan={3}><b>{totalPrice.toLocaleString("ru-RU")} ₽</b></td>
+          </tr> */}
+        </tbody>
+      </table>
+    );
+  };
 
   return (
     <>
       <div className="main-application-panel">
-        <NavigationBarMin 
-            onShowMax={handleShowMax} 
-            onHideMax={handleHideMax} 
-            isNavMaxVisible={isNavMaxVisible} 
-        />
-        {isNavMaxVisible && <NavigationBarMax 
-            onShowMax={handleShowMax} 
-            onHideMax={handleHideMax} 
-            isNavMaxVisible={isNavMaxVisible}
-        />}
+        <NavigationBarMin onShowMax={handleShowMax} onHideMax={handleHideMax} isNavMaxVisible={isNavMaxVisible} />
+        {isNavMaxVisible && (
+          <NavigationBarMax onShowMax={handleShowMax} onHideMax={handleHideMax} isNavMaxVisible={isNavMaxVisible} />
+        )}
         <HeaderApplicationPanel role={role} title={title} />
       </div>
 
@@ -362,117 +398,66 @@ const AllOffersForSelected = (
           {analyzedComponents.length === 0 ? (
             <p>Нет выбранных компонентов для анализа.</p>
           ) : loading ? (
-            <div className="custom-spinner-container">
-              <div className="custom-spinner"></div>
-            </div>
-          ) : combinedOffers.length === 0 ? (
+            <div className="custom-spinner-container"><div className="custom-spinner"></div></div>
+          ) : combinedOffers.length === 0 && viewMode === 'all' ? (
             <p className="text-muted">Нет предложений.</p>
           ) : (
             <>
               <div className="mb-4 all-offers-selected__button-block d-flex justify-content-between align-items-center">
                 <div>
-                
-                  {!showBestByProvider ? 
-                    <>
-                      <button className="btn btn-outline-secondary mr-10" onClick={()=> window.location.href="/SuppliersOffers"}>Назад</button>
-                    </>:""
-                  }
-                  <button
-                    className="btn btn-sm btn-outline-success mx-2"
-                    onClick={exportToExcel}
-                  >
-                    Скачать все предложения (Excel)
+                  {viewMode !== 'all' && (
+                    <button className="btn btn-outline-secondary mr-10" onClick={() => setViewMode('all')}>
+                      Назад к полному списку
+                    </button>
+                  )}
+                  <button className="btn btn-sm btn-outline-success mx-2" onClick={exportToExcel}>
+                    Скачать все (Excel)
                   </button>
-                  <button
-                        className="btn btn-sm btn-outline-success"
-                        onClick={exportBestByProviderToExcel}
-                      >
-                        Скачать файл заказа поставщикам (Excel)
+                  <button className="btn btn-sm btn-outline-success mx-2" onClick={exportBestByProviderToExcel}>
+                    Скачать лучшие по цене (Excel)
+                  </button>
+                  <button className="btn btn-sm btn-outline-success" onClick={exportFastestDeliveryProviderToExcel}>
+                    Скачать лучшие по сроку (Excel)
                   </button>
                 </div>
-                <div>
-                  {!showBestByProvider ? 
-                    <>
-                      <button className="btn btn-outline-secondary mr-10" onClick={()=> window.location.href="/SuppliersOffers"}>Назад</button>
-                    </>:""
-                  }
+                
+                <div className="all-offers-selected__button-select-block">
                   <button
-                    className={`btn ml-2 ${showBestByProvider ? "btn-outline-secondary" : "btn-secondary"}`}
-                    onClick={() => setShowBestByProvider(!showBestByProvider)}
+                    className={`btn ml-2 ${viewMode === 'price' ? 'btn-secondary' : 'btn-outline-secondary'}`}
+                    onClick={() => setViewMode('price')}
                   >
-                    {showBestByProvider ? "<  К полному списку" : "Лучшие предложения >"}
+                    Лучшие по цене
+                  </button>
+                  <button
+                    className={`btn ml-2 ${viewMode === 'time' ? 'btn-secondary' : 'btn-outline-secondary'}`}
+                    onClick={() => setViewMode('time')}
+                  >
+                    Лучшие по сроку
                   </button>
                 </div>
               </div>
-              {!showBestByProvider ? (
-                <>
-                  <table className="table table-bordered all-offers-selected__table">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th className="aos-table__th-article">Артикул</th>
-                        <th>Наименование</th>
-                        <th className="aos-table__th-company">Компания</th>
-                        <th className="aos-table__th-price">Цена</th>
-                        <th className="aos-table__th-term">Срок</th>
-                        <th className="aos-table__th-data">Актуальность</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {renderRows()}
-                    </tbody>
-                  </table>
-                  {/* Пагинация страниц */}
-                  {/* <PaginationPage
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    totalPages={totalPages}
-                  /> */}
-                </>
-              ) : (
-                Object.entries(bestOffersByProvider).map(([provider, offers], index) => {
-                  const sortedOffers = offers.sort((a, b) => a.priceComponent - b.priceComponent);
-                  const totalPrice = sortedOffers.reduce((sum, o) => sum + o.priceComponent, 0);
 
-                  // Это выдача таблицы с лучшими результатами отфильтрованными по лучшей цене
-                  return (
-                    <div key={index} className="mb-5">
-                      <h6 className="text-primary mb-2">
-                        <strong>{provider}</strong>
-                      <br/> предлагает лучшие цены на:</h6>
-                      {/* Это всплывающее окно карточки компании */}
-                      {/* <FullDataCompanyAndCollaborators dataCompany={""}/> */}
-                      
-                      <table className="table table-bordered all-offers-selected__table">
-                        <thead className="thead-light">
-                          <tr>
-                            <th className="aos-table__th-article">Артикул</th>
-                            <th>Наименование</th>
-                            <th className="aos-table__th-price">Цена</th>
-                            <th className="aos-table__th-term">Срок</th>
-                            <th className="aos-table__th-data">Актуальность</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {sortedOffers.map((offer, idx) => (
-                            <tr key={idx}>
-                              <td>{offer.vendorCode}</td>
-                              <td>{offer.nameComponent}</td>
-                              <td>{offer.priceComponent.toLocaleString("ru-RU")} ₽</td>
-                              <td>{offer.deliveryTimeComponent}</td>
-                              <td>{new Date(offer.saveDataPrice).toLocaleDateString("ru-RU")}</td>
-                            </tr>
-                          ))}
-                          <tr className="table">
-                            <td colSpan="2"><b>Итого</b></td>
-                            <td><b>{totalPrice.toLocaleString("ru-RU")} ₽</b></td>
-                            <td colSpan="2"></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  );
-                })
+              {viewMode === 'all' ? (
+                <table className="table table-bordered all-offers-selected__table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th className="aos-table__th-article">Артикул</th>
+                      <th>Наименование</th>
+                      <th className="aos-table__th-company">Компания</th>
+                      <th className="aos-table__th-price">Цена</th>
+                      <th className="aos-table__th-term">Срок</th>
+                      <th className="aos-table__th-data">Актуальность</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {renderRows()}
+                  </tbody>
+                </table>
+              ) : loadingBest ? (
+                <div className="custom-spinner-container"><div className="custom-spinner"></div></div>
+              ) : (
+                renderBestTable(viewMode === 'price' ? bestPriceData : bestTimeData)
               )}
             </>
           )}
