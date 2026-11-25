@@ -300,7 +300,7 @@ const AllOffersForSelected = (
                 {/*{!roleUser?<td>{offer.nameProvider}</td>:<td style={{fontSize: '14px', color: "green"}}>доступно по подписке</td>}*/}
                 <td>
                       {/*Если пользователь Администратор или заказчик, выводим ссылку на страницу с контактами менеджеров компании*/}
-                      {roleAdmin?
+                      {roleAdmin || roleCustomer?
                       <>
                         {/*Ссылка на страницу с данными о менедрере компании*/}
                         <a 
