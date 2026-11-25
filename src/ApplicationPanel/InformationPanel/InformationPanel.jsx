@@ -315,17 +315,51 @@ const InformationPanel = ({ role }) => {
                   <></>
                 }
                 {/* Блок с информацией о Поставщиках определенного производителя*/}
-                {panelProviderManufacturer?<>asasasa</>:<></>}
-                <div className="loading-data-from-1C-block">
-                    <div
-                      className="pagination-icon-block__icon pagination-icon-block__add-icon cpib__plus-button"
-                      onClick={()=>addProviderManufacturer()}
-                    >
-                      +
-                    </div>
-                    <h5 className="cpib__title"> Поставщики производителя:</h5>
-                    <Manufacturer setGuidIdManufacturer={setGuidIdManufacturer} setProviderManufacturerInfo={setProviderManufacturerInfo} setProviderManufacturerList={setProviderManufacturerList} />
-                </div>
+                {panelProviderManufacturer?
+                    <>
+                      <div className="loading-data-from-1C-block">
+                          <div
+                            className="pagination-icon-block__icon pagination-icon-block__add-icon cpib__plus-button"
+                            onClick={()=>addProviderManufacturer()}
+                          >
+                            -
+                          </div>
+                          <h5 className="cpib__title"> Поставщики производителя:</h5>
+                          <div className="col g-3" style={{marginBottom: '10px', paddingRight: "10px"}}>
+                              <div class="col mb-2">
+                                  <div>Производитель:</div>
+                                  <Manufacturer 
+                                      setGuidIdManufacturer={setGuidIdManufacturer} 
+                                      setProviderManufacturerInfo={setProviderManufacturerInfo} 
+                                      setProviderManufacturerList={setProviderManufacturerList} 
+                                  />
+                              </div>
+                              <div class="col mb-4">
+                                  <div>Поставщик:</div>
+                              
+                              </div>
+                              <button 
+                                  style={{width: "100%"}} 
+                                  type="button" 
+                                  className="btn btn-outline-secondary"
+                              >Записать</button>
+                            </div>
+                      </div>
+                    </>:
+                    <>
+                       <div className="loading-data-from-1C-block">
+                            <div
+                              className="pagination-icon-block__icon pagination-icon-block__add-icon cpib__plus-button"
+                              onClick={()=>addProviderManufacturer()}
+                            >
+                              +
+                            </div>
+                            <h5 className="cpib__title"> Поставщики производителя:</h5>
+                            <Manufacturer setGuidIdManufacturer={setGuidIdManufacturer} setProviderManufacturerInfo={setProviderManufacturerInfo} setProviderManufacturerList={setProviderManufacturerList} />
+                        </div>
+                    </>}
+
+
                 {providerManufacturerInfo?
                     <>
                     <br/>
