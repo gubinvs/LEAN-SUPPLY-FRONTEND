@@ -15,8 +15,8 @@
 
 .text-primary {
     font-family: "Mulish", serif !important;
-    font-size: 22px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 400;
     color: #342F2C !important;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .aos-table__th-company {
-    width: 200px;
+    min-width: 200px;
 }
 
 .aos-table__th-quant {

@@ -371,26 +371,7 @@ const AllOffersForSelected = (
             <>
               <div className="mb-4 all-offers-selected__button-block d-flex justify-content-between align-items-center">
                 <div>
-                    {/*{!roleUser?
-                      <>
-                        <button
-                            className="btn btn-sm btn-outline-success mx-2"
-                            onClick={exportToExcel}
-                          >
-                            Скачать все предложения (Excel)
-                          </button>
-                      </>
-                      :
-                      <>
-                        <button
-                          className="btn btn-sm btn-outline-success mx-2"
-                          onClick={() => alert("Недоступно в данной роли")}
-                        >
-                          Скачать все предложения (Excel)
-                        </button>
-                      </>
-                    }*/}
-                  
+                
                   {!showBestByProvider ? 
                     <>
                       <button className="btn btn-outline-secondary mr-10" onClick={()=> window.location.href="/SuppliersOffers"}>Назад</button>
@@ -402,46 +383,25 @@ const AllOffersForSelected = (
                   >
                     Скачать все предложения (Excel)
                   </button>
-                  
-                  {/*{!roleUser?
-                    <>
-                      <button
+                  <button
                         className="btn btn-sm btn-outline-success"
                         onClick={exportBestByProviderToExcel}
                       >
                         Скачать файл заказа поставщикам (Excel)
-                      </button>
-                    </>
-                    :
-                    <>
-                      <button
-                          className="btn btn-sm btn-outline-success"
-                          onClick={() => alert("Недоступно в данной роли")}
-                        >
-                          Скачать файл заказа поставщикам (Excel)
-                        </button>
-                    </>
-                  }*/}
-                   {/* <button
-                        className="btn btn-sm btn-outline-success"
-                        onClick={exportBestByProviderToExcel}
-                      >
-                        Скачать файл заказа поставщикам (Excel)
-                    </button> */}
+                  </button>
                 </div>
                 <div>
-                  
                   {!showBestByProvider ? 
                     <>
                       <button className="btn btn-outline-secondary mr-10" onClick={()=> window.location.href="/SuppliersOffers"}>Назад</button>
                     </>:""
                   }
-                  {/* <button
+                  <button
                     className={`btn ml-2 ${showBestByProvider ? "btn-outline-secondary" : "btn-secondary"}`}
                     onClick={() => setShowBestByProvider(!showBestByProvider)}
                   >
-                    {showBestByProvider ? "< К полному списку" : "Лучшие предложения >"}
-                  </button> */}
+                    {showBestByProvider ? "<  К полному списку" : "Лучшие предложения >"}
+                  </button>
                 </div>
               </div>
               {!showBestByProvider ? (
@@ -478,9 +438,7 @@ const AllOffersForSelected = (
                   return (
                     <div key={index} className="mb-5">
                       <h6 className="text-primary mb-2">
-                        {/*Это если делать ознакомительный режим для бесплатного пользователя*/}
-                        {/*{!roleUser? <strong>{provider}</strong>:<div style={{ fontSize: '14px', color: 'green', fontWeight: 'bold' }}>"КОМПАНИЯ ДОСТУПНА ПО ПОДПИСКЕ"</div>} предлагает лучшие цены на:</h6>*/}
-                      <strong>{provider}</strong>
+                        <strong>{provider}</strong>
                       <br/> предлагает лучшие цены на:</h6>
                       {/* Это всплывающее окно карточки компании */}
                       {/* <FullDataCompanyAndCollaborators dataCompany={""}/> */}
@@ -500,7 +458,6 @@ const AllOffersForSelected = (
                             <tr key={idx}>
                               <td>{offer.vendorCode}</td>
                               <td>{offer.nameComponent}</td>
-                             
                               <td>{offer.priceComponent.toLocaleString("ru-RU")} ₽</td>
                               <td>{offer.deliveryTimeComponent}</td>
                               <td>{new Date(offer.saveDataPrice).toLocaleDateString("ru-RU")}</td>
