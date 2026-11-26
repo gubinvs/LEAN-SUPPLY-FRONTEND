@@ -10,7 +10,7 @@ import NavigationBarMax from "../NavigationBar/NavigationBarMax.jsx";
 import HeaderApplicationPanel from "../ApplicationPanel/Header/HeaderApplicationPanel.jsx";
 import Select from 'react-select'; // установка в проект = npm install react-select
 import AddCompanyProvider from "../ApplicationPanel/InformationPanel/AddCompanyProvider.jsx";
-import Manufacturer from "../Manufacturer/Manufacturer.jsx";
+import AddManufacturer from "../AddManufacturer/AddManufacturer.jsx";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -278,7 +278,7 @@ const AddComponentApplication = (
                     {roleCustomer || roleAdmin ? 
                     <>
                     <div className="mb-40">
-                        <Manufacturer />
+                        <AddManufacturer />
                     </div>
                     </>:""}
                     <h6><b>Поиск артикула в базе данных:</b></h6>

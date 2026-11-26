@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./manufacturer.css";
+import "./addManufacturer.css";
 import { wordingOfState } from "../js/Utilits/wordingOfState.js";
 import { addCompanyManufacturer } from "../js/RequestsApi/addCompanyManufacturer.js";
 
