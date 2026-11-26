@@ -305,6 +305,9 @@ const AllOffersForSelected = ({ role, title }) => {
             <td>{offer.deliveryTimeComponent}</td>
             <td>{new Date(offer.saveDataPrice).toLocaleDateString("ru-RU")}</td>
           </tr>
+          {/* Пустая строка после данных если ниже нет данных о оприходвании */}
+          {isLastForVendor && offer.entryPurchase?.[0] === undefined ? <tr><td colSpan={7}></td></tr>:""}
+
 
           {/* Выводим оприходование ТОЛЬКО после последнего предложения артикула */}
           {isLastForVendor && offer.entryPurchase?.[0] && (
@@ -318,13 +321,7 @@ const AllOffersForSelected = ({ role, title }) => {
                 <td>{new Date(offer.entryPurchase[0].saveDataPrice).toLocaleDateString("ru-RU")}</td>
               </tr>
               <tr>
-                <td></td>              
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colSpan={7}></td>              
               </tr>
             </>
           )}
