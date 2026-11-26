@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 //import Select from 'react-select';
-import "./informationPal.css";
+import "./informationPanel.css";
 import "../applicationPanel.css";
 import "./dataCollaborator.css";
 import "./informationCompanyCard.css";

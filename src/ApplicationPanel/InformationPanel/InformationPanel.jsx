@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-//import Select from 'react-select';
-import "./informationPal.css";
+import "./informationPanel.css";
 import "../applicationPanel.css";
 import "./dataCollaborator.css";
 import "./informationCompanyCard.css";
@@ -9,11 +8,8 @@ import ApiUrl from "../../js/ApiUrl";
 import InformationCompanyCard from "./InformationCompanyCard.jsx";
 import DataCollaborator from "./DataCollaborator.jsx";
 import { SpinnersMin } from "../../ElementApplication/Spinners.jsx";
-//import {useProviders} from "../../js/Utilits/loadProviders.js";
 import Component from './Component.jsx';
-import Manufacturer from './Manufacturer.jsx';
 import ProviderManufacturerModule from "../ProviderManufacturerModule/ProviderManufacturerModule.jsx"
-//import {handleSelectManufacturerChange} from "../../js/Utilits/handleSelectManufacturerChange.js";
 import AddInfoCollaborator from "./AddInfoCollaborator";
 
 
@@ -110,9 +106,7 @@ const InformationPanel = ({ role }) => {
   };
 
 
-
   useEffect(() => {
-    // Оборачиваем асинхронную функцию внутрь useEffect
     const fetchData = async () => {
       try {
         const response = await fetch(ApiUrl + "/api/DataInfoPanel/" + guidIdCollaborator, {

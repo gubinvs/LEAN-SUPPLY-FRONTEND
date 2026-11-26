@@ -1,15 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import "./informationPal.css";
+import "../InformationPanel/informationPanel.css";
 import "../applicationPanel.css";
-import "./dataCollaborator.css";
-import "./informationCompanyCard.css";
-import ApiUrl from "../../js/ApiUrl";
-import InformationCompanyCard from "./InformationCompanyCard.jsx";
-import DataCollaborator from "./DataCollaborator.jsx";
-import { SpinnersMin } from "../../ElementApplication/Spinners.jsx";
-import {useProviders} from "../../js/Utilits/loadProviders.js";
-import Component from './Component.jsx';
+import "../InformationPanel/dataCollaborator.css";
+import "../InformationPanel/informationCompanyCard.css";
+import ApiUrl from "../../js/ApiUrl.js";
 import {handleSelectManufacturerChange} from "../../js/Utilits/handleSelectManufacturerChange.js";
+
   
   
 // Компонент списка производителей с поиском по тексту

@@ -1,6 +1,11 @@
 import React from "react";
-import Manufacturer from "../InformationPanel/Manufacturer.jsx";
+import Manufacturer from "./Manufacturer.jsx";
+import ProviderList from "./ProviderList.jsx";
 
+
+
+/// Модуль информации - добавляет и выводит 
+// информацию в связке компания поставщик и наименование производителя которого поставляет эта компания.
 
 
 const ProviderManufacturerModule  = (
@@ -40,7 +45,9 @@ const ProviderManufacturerModule  = (
                             </div>
                             <div class="col mb-4">
                                 <div>Поставщик:</div>
-                            
+                                <ProviderList 
+                                
+                                />
                             </div>
                             <button 
                                 style={{width: "100%"}} 
