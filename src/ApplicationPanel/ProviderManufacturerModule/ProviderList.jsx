@@ -8,7 +8,13 @@ import ApiUrl from "../../js/ApiUrl.js";
 // import { handleSelectProviderChange } from "../../js/Utilits/handleSelectProviderChange.js";
 
 // Компонент списка поставщиков с поиском по тексту
-const ProviderList = ({ setGuidIdProvider, setProviderInfo, setProviderList }) => {
+const ProviderList = (
+    { 
+        setSelectedGuidProvider,
+        setGuidIdProvider, 
+        setProviderInfo, 
+        setProviderList 
+    }) => {
     // Состояния для работы с данными
     const [providers, setProviders] = useState([]); // Массив поставщиков из БД
     const [searchTerm, setSearchTerm] = useState(''); // Текст поиска
@@ -46,6 +52,7 @@ const ProviderList = ({ setGuidIdProvider, setProviderInfo, setProviderList }) =
         setSelectedName(name); // Отображаем имя в поле
         setSearchTerm(''); // Сбрасываем текст в поиске
         setIsOpen(false); // Закрываем выпадающий список
+        setSelectedGuidProvider(guid);
 
         // Передаем выбранный ID наверх (или вызываем вашу утилиту, если она есть)
         if (setGuidIdProvider) {

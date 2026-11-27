@@ -309,14 +309,13 @@ const InformationPanel = ({ role }) => {
                   :
                   <></>}
                 <ProviderManufacturerModule
-                providerManufacturerList = {providerManufacturerList}
+                      providerManufacturerList = {providerManufacturerList}
                       panelProviderManufacturer={panelProviderManufacturer}
                       providerManufacturerInfo = {providerManufacturerInfo}
                       setGuidIdManufacturer={setGuidIdManufacturer} 
                       setProviderManufacturerInfo={setProviderManufacturerInfo} 
                       setProviderManufacturerList={setProviderManufacturerList}
                       addProviderManufacturer = {addProviderManufacturer}
-
                 />
             </div>
         </div>

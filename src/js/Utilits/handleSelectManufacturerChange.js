@@ -11,7 +11,7 @@ export const handleSelectManufacturerChange = (
     // Отправили запрос к api для получения информации о менеджерах компании
     const fetchData = async () => {
         try {
-        const response = await fetch(`${ApiUrl}/api/ReturnListProviderManufacturer`, {
+            const response = await fetch(`${ApiUrl}/api/ReturnListProviderManufacturer`, {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json",
@@ -28,7 +28,6 @@ export const handleSelectManufacturerChange = (
     
             const data = await response.json();
 
-            console.log(data);
 
             if (data === null || data.length === 0) {
             const formattedData = {

@@ -1,6 +1,8 @@
 import React from "react";
+import { useState } from "react";
 import Manufacturer from "./Manufacturer.jsx";
 import ProviderList from "./ProviderList.jsx";
+import ApiUrl from "../../js/ApiUrl.js";
 
 
 
@@ -20,6 +22,41 @@ const ProviderManufacturerModule  = (
     }
 ) => {
 
+        // Идентификаторы выбранных производителя и поставщика
+        const [selectedGuidMan, setSelectedGuidMan] = useState(''); // Идентификатор выбранного производителя
+        const [selectedGuidProvider, setSelectedGuidProvider] = useState(''); // Идентификатор выбранного поставщика
+        const [loading, setLoading] = useState(false);
+
+        // Собственно сама функция записи связки поставщика и проиозводителя
+        const addRecordProviderManufacturer = async () => {
+            setLoading(true);
+            const request = {
+                guidIdManufacturer: selectedGuidMan,
+                guidIdProvider: selectedGuidProvider
+            };
+
+            try {
+                const response = await fetch(`${ApiUrl}/v1/AddRecordProviderManufacturer`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(request),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Данные ушли:", data.message);
+                } else {
+                    console.error("Ошибка сервера:", response.status);
+                }
+            } catch (error) {
+                console.error("Ошибка при отправке данных:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
 
     return (
         <>
@@ -38,6 +75,7 @@ const ProviderManufacturerModule  = (
                             <div class="col mb-2">
                                 <div>Производитель:</div>
                                 <Manufacturer 
+                                    setSelectedGuidMan = {setSelectedGuidMan}
                                     setGuidIdManufacturer={setGuidIdManufacturer} 
                                     setProviderManufacturerInfo={setProviderManufacturerInfo} 
                                     setProviderManufacturerList={setProviderManufacturerList} 
@@ -46,14 +84,20 @@ const ProviderManufacturerModule  = (
                             <div class="col mb-4">
                                 <div>Поставщик:</div>
                                 <ProviderList 
-                                
+                                    setSelectedGuidProvider = {setSelectedGuidProvider}
                                 />
                             </div>
-                            <button 
-                                style={{width: "100%"}} 
-                                type="button" 
-                                className="btn btn-outline-secondary"
-                            >Записать</button>
+                            {!loading ?
+                                <>
+                                    <button 
+                                        style={{width: "100%"}} 
+                                        type="button" 
+                                        className="btn btn-outline-secondary"
+                                        onClick={()=>addRecordProviderManufacturer()}
+                                    >Записать</button>
+                                </>
+                            : <p>Запись переданных данных...</p>}
+                       
                         </div>
                     </div>
                 </>:
@@ -67,6 +111,7 @@ const ProviderManufacturerModule  = (
                         </div>
                         <h5 className="cpib__title"> Поставщики производителя:</h5>
                         <Manufacturer 
+                            setSelectedGuidMan = {setSelectedGuidMan}
                             setGuidIdManufacturer={setGuidIdManufacturer} 
                             setProviderManufacturerInfo={setProviderManufacturerInfo} 
                             setProviderManufacturerList={setProviderManufacturerList} 

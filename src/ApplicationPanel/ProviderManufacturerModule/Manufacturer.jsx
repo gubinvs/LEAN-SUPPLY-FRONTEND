@@ -9,7 +9,13 @@ import {handleSelectManufacturerChange} from "../../js/Utilits/handleSelectManuf
   
   
 // Компонент списка производителей с поиском по тексту
-const Manufacturer = ({setGuidIdManufacturer, setProviderManufacturerInfo, setProviderManufacturerList}) => {
+const Manufacturer = (
+    {
+        setSelectedGuidMan,
+        setGuidIdManufacturer, 
+        setProviderManufacturerInfo, 
+        setProviderManufacturerList
+    }) => {
     // Состояния для работы с данными
     const [manufacturer, setManufacturer] = useState([]); // Массив из БД
     const [searchTerm, setSearchTerm] = useState('');     // Текст поиска
@@ -45,6 +51,7 @@ const Manufacturer = ({setGuidIdManufacturer, setProviderManufacturerInfo, setPr
       setSelectedName(name);      // Отображаем имя в поле
       setSearchTerm('');          // Сбрасываем текст в поиске
       setIsOpen(false);           // Закрываем выпадающий список
+      setSelectedGuidMan(guid)  // Записали guid выбранного производителя
       handleSelectManufacturerChange(guid, setGuidIdManufacturer, setProviderManufacturerInfo, setProviderManufacturerList); // Вызываем вашу функцию (передаем ID бэкенду)
     };
 
